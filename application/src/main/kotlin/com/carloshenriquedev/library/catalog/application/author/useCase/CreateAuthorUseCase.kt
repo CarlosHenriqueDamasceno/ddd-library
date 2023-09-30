@@ -2,10 +2,12 @@ package com.carloshenriquedev.library.catalog.application.author.useCase
 
 import com.carloshenriquedev.library.catalog.application.UseCase
 import com.carloshenriquedev.library.catalog.domain.author.Author
+import com.carloshenriquedev.library.catalog.domain.common.Either
+import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
 import java.time.Instant
 
-interface CreateAuthorUseCase : UseCase<CreateAuthorCommand, AuthorOutput> {
-    override fun execute(command: CreateAuthorCommand): AuthorOutput
+interface CreateAuthorUseCase : UseCase<CreateAuthorCommand, Either<AuthorOutput, ValidationHandler>> {
+    override fun execute(command: CreateAuthorCommand): Either<AuthorOutput, ValidationHandler>
 }
 
 data class CreateAuthorCommand(val name: String)

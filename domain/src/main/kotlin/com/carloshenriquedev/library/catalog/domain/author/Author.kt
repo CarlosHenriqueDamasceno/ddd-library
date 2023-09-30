@@ -1,8 +1,8 @@
 package com.carloshenriquedev.library.catalog.domain.author
 
-import com.carloshenriquedev.library.catalog.domain.AggregateRoot
-import com.carloshenriquedev.library.catalog.domain.Identifier
-import com.carloshenriquedev.library.catalog.domain.nowInMiliSeconds
+import com.carloshenriquedev.library.catalog.domain.common.AggregateRoot
+import com.carloshenriquedev.library.catalog.domain.common.Identifier
+import com.carloshenriquedev.library.catalog.domain.common.nowInMiliSeconds
 import java.time.Instant
 import java.util.*
 

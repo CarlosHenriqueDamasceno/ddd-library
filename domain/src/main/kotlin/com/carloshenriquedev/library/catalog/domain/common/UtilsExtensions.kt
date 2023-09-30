@@ -1,4 +1,4 @@
-package com.carloshenriquedev.library.catalog.domain
+package com.carloshenriquedev.library.catalog.domain.common
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit

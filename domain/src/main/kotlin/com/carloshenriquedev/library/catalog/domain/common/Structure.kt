@@ -1,4 +1,4 @@
-package com.carloshenriquedev.library.catalog.domain
+package com.carloshenriquedev.library.catalog.domain.common
 
 abstract class ValueObject
 

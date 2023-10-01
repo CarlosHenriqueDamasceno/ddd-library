@@ -3,6 +3,6 @@ package com.carloshenriquedev.library.catalog.domain.common
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-fun nowInMiliSeconds(): Instant {
+internal fun nowInMiliSeconds(): Instant {
     return Instant.now().truncatedTo(ChronoUnit.MICROS)
 }

@@ -15,6 +15,11 @@ open class ValidationHandler {
     }
 }
 
-abstract class Validator(val handler: ValidationHandler) {
+internal abstract class Validator(val handler: ValidationHandler) {
     abstract fun validate()
 }
+
+data class DomainException(
+    override val message: String,
+    val handler: ValidationHandler
+) : RuntimeException(message, null, true, false)

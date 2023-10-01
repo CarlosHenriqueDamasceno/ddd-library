@@ -4,27 +4,23 @@ import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAu
 import com.carloshenriquedev.library.catalog.application.author.useCase.DefaultCreateAuthorUseCase
 import com.carloshenriquedev.library.catalog.domain.author.Author
 import com.carloshenriquedev.library.catalog.domain.common.Either
-import io.mockk.*
-import org.junit.jupiter.api.AfterEach
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-class DefaultCreateAuthorUseCaseTest {
+class DefaultCreateAuthorUseCaseTest : UseCaseTest() {
 
     private val authorRepository = mockk<AuthorRepository>()
 
     private val useCase = DefaultCreateAuthorUseCase(authorRepository)
 
-    @AfterEach
-    fun tearDown() {
-        confirmVerified(authorRepository)
-        clearMocks(authorRepository)
-    }
-
     @Test
     fun `should create an author when given a valid command`() {
-        // given
+        //given
         val authorSlot = slot<Author>()
         val expectedName = "Uncle Bob"
         val command = CreateAuthorCommand(expectedName)
@@ -51,16 +47,22 @@ class DefaultCreateAuthorUseCaseTest {
 
     @Test
     fun `should return and error when trying to create an author with empty name`() {
-        val expectedName = ""
+        //given
+        val expectedName = " "
         val expectedErrorCount = 1
         val expectedErrorMessage = "Author's name can not be empty."
         val command = CreateAuthorCommand(expectedName)
+        //when
         val result = useCase.execute(command)
-
+        // then
         if (result is Either.Right) {
             assertEquals(expectedErrorCount, result.value.size)
             assertEquals(expectedErrorMessage, result.value[0].message)
         }
 
+    }
+
+    override fun getMocks(): Array<Any> {
+        return arrayOf(authorRepository)
     }
 }

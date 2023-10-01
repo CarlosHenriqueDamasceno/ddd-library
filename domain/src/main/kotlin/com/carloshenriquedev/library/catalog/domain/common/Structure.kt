@@ -33,4 +33,6 @@ abstract class Entity<ID : Identifier>(val id: ID) {
     }
 }
 
-abstract class AggregateRoot<ID : Identifier>(id: ID) : Entity<ID>(id)
+abstract class AggregateRoot<ID : Identifier>(id: ID) : Entity<ID>(id) {
+    protected abstract fun validate()
+}

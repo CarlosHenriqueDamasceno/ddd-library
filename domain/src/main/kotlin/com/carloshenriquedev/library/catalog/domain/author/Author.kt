@@ -1,6 +1,7 @@
 package com.carloshenriquedev.library.catalog.domain.author
 
 import com.carloshenriquedev.library.catalog.domain.common.AggregateRoot
+import com.carloshenriquedev.library.catalog.domain.common.DomainException
 import com.carloshenriquedev.library.catalog.domain.common.Identifier
 import com.carloshenriquedev.library.catalog.domain.common.nowInMiliSeconds
 import java.time.Instant
@@ -16,6 +17,9 @@ class Author private constructor(
     var deletedAt: Instant?
 ) : AggregateRoot<AuthorId>(id) {
 
+    init {
+        validate()
+    }
 
     companion object Builder {
         fun buildNewAuthor(name: String): Author {
@@ -25,4 +29,11 @@ class Author private constructor(
         }
     }
 
+    override fun validate() {
+        val authorValidationHandler = AuthorValidationHandler()
+        val validator = AuthorValidator(this, authorValidationHandler)
+        validator.validate()
+        if (authorValidationHandler.size > 0)
+            throw DomainException("Failed to create a Aggregate Author", authorValidationHandler)
+    }
 }

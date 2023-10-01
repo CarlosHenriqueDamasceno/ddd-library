@@ -12,13 +12,11 @@ abstract class Identifier(val value: String) : ValueObject() {
         return value == other.value
     }
 
-    override fun hashCode(): Int {
-        return value.hashCode()
-    }
+    override fun hashCode() = value.hashCode()
+
 }
 
 abstract class Entity<ID : Identifier>(val id: ID) {
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -28,9 +26,8 @@ abstract class Entity<ID : Identifier>(val id: ID) {
         return id == other.id
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode() = id.hashCode()
+    
 }
 
 abstract class AggregateRoot<ID : Identifier>(id: ID) : Entity<ID>(id) {

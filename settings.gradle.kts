@@ -12,3 +12,4 @@ plugins {
 rootProject.name = "ddd-library-catalog"
 include("domain")
 include("application")
+include("infrastructure")

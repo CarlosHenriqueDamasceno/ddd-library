@@ -1,8 +1,8 @@
 package com.carloshenriquedev.library.catalog.application.author.useCase
 
 import com.carloshenriquedev.library.catalog.application.UseCase
+import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.author.Author
-import com.carloshenriquedev.library.catalog.domain.common.Either
 import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
 import java.time.Instant
 
@@ -16,7 +16,6 @@ data class AuthorOutput(
     val id: String,
     val name: String,
     val createdAt: Instant,
-    val updatedAt: Instant,
     val deletedAt: Instant?
 ) {
     companion object {
@@ -24,7 +23,6 @@ data class AuthorOutput(
             author.id.value,
             author.name,
             author.createdAt,
-            author.updatedAt,
             author.deletedAt
         )
     }

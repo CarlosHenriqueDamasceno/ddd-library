@@ -4,14 +4,16 @@ data class Error(val message: String)
 
 open class ValidationHandler {
 
-    private val errors: MutableList<Error> = mutableListOf()
+    private val _errors: MutableList<Error> = mutableListOf()
+    val errors: List<Error>
+        get() = _errors.toList()
     val size: Int
         get() = errors.size
 
     operator fun get(index: Int) = errors[index]
 
     open fun handle(error: Error) {
-        errors.add(error)
+        _errors.add(error)
     }
 }
 

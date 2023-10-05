@@ -2,14 +2,15 @@ package com.carloshenriquedev.library.catalog.application.author
 
 import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorCommand
 import com.carloshenriquedev.library.catalog.application.author.useCase.DefaultCreateAuthorUseCase
+import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.author.Author
-import com.carloshenriquedev.library.catalog.domain.common.Either
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.fail
 
 class DefaultCreateAuthorUseCaseTest : UseCaseTest() {
@@ -36,8 +37,7 @@ class DefaultCreateAuthorUseCaseTest : UseCaseTest() {
             assertEquals(result.value.id, authorSlot.captured.id.value)
             assertEquals(result.value.name, authorSlot.captured.name)
             assertEquals(result.value.createdAt, authorSlot.captured.createdAt)
-            assertEquals(result.value.updatedAt, authorSlot.captured.updatedAt)
-            assertEquals(result.value.deletedAt, authorSlot.captured.deletedAt)
+            assertNull(result.value.deletedAt)
             verify(exactly = 1) { authorRepository.create(authorSlot.captured) }
         } else {
             fail("Result must be Right")

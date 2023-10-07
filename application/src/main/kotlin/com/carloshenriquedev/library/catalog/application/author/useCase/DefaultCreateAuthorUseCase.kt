@@ -1,6 +1,9 @@
 package com.carloshenriquedev.library.catalog.application.author.useCase
 
-import com.carloshenriquedev.library.catalog.application.author.AuthorRepository
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorOutput
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorRepository
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorCommand
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorUseCase
 import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.author.Author
 import com.carloshenriquedev.library.catalog.domain.common.DomainException

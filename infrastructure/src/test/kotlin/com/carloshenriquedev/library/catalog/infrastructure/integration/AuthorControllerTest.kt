@@ -1,12 +1,12 @@
 package com.carloshenriquedev.library.catalog.infrastructure.integration
 
-import com.carloshenriquedev.library.catalog.application.author.useCase.AuthorOutput
-import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorCommand
-import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorUseCase
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorOutput
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorCommand
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorUseCase
 import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.common.Error
 import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
-import com.carloshenriquedev.library.catalog.infrastructure.author.AuthorRequest
+import com.carloshenriquedev.library.catalog.infrastructure.author.adapter.AuthorRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every

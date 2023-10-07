@@ -1,11 +1,10 @@
-package com.carloshenriquedev.library.catalog.infrastructure.author
+package com.carloshenriquedev.library.catalog.infrastructure.author.adapter
 
-import com.carloshenriquedev.library.catalog.application.author.useCase.AuthorOutput
-import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorCommand
-import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorUseCase
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorOutput
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorCommand
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorUseCase
 import com.carloshenriquedev.library.catalog.application.common.Either
-import com.carloshenriquedev.library.catalog.domain.common.Error
-import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
+import com.carloshenriquedev.library.catalog.infrastructure.common.adapter.ApiError
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
@@ -23,16 +22,22 @@ class AuthorController(val createAuthorUseCase: CreateAuthorUseCase) {
     @PostMapping
     fun create(@Valid @RequestBody data: AuthorRequest): ResponseEntity<Any> {
         val command = data.toCommand()
-        val output = createAuthorUseCase.execute(command)
-        return when (output) {
+        return when (val output = createAuthorUseCase.execute(command)) {
             is Either.Left -> {
                 val uri = URI.create("/authors/${output.value.id}")
-                val response = AuthorResponse.from(output.value)
-                ResponseEntity.created(uri)
-                    .body(response)
+                output.value.let {
+                    ResponseEntity.created(uri)
+                        .body(AuthorResponse.from(it))
+                }
             }
 
-            is Either.Right -> ResponseEntity.unprocessableEntity().body(ApiError.from(output.value))
+            is Either.Right -> {
+                output.value.let {
+                    ResponseEntity.unprocessableEntity().run {
+                        body(ApiError.from(it))
+                    }
+                }
+            }
         }
     }
 }
@@ -47,7 +52,6 @@ data class AuthorResponse(
     @JsonProperty("created_at") val createdAt: String,
     @JsonProperty("deleted_at") val deletedAt: String?
 ) {
-
     companion object Builder {
         fun from(output: AuthorOutput): AuthorResponse {
             return AuthorResponse(
@@ -57,12 +61,5 @@ data class AuthorResponse(
                 output.deletedAt?.toString()
             )
         }
-    }
-
-}
-
-data class ApiError(val errors: List<Error>) {
-    companion object Builder {
-        fun from(handler: ValidationHandler) = ApiError(handler.errors)
     }
 }

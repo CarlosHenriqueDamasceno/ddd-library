@@ -1,4 +1,4 @@
-package com.carloshenriquedev.library.catalog.application.author
+package com.carloshenriquedev.library.catalog.application.author.port
 
 import com.carloshenriquedev.library.catalog.domain.author.Author
 

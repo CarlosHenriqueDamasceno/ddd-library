@@ -1,7 +1,8 @@
-package com.carloshenriquedev.library.catalog.application.author
+package com.carloshenriquedev.library.catalog.application.author.useCase
 
-import com.carloshenriquedev.library.catalog.application.author.useCase.CreateAuthorCommand
-import com.carloshenriquedev.library.catalog.application.author.useCase.DefaultCreateAuthorUseCase
+import com.carloshenriquedev.library.catalog.application.author.UseCaseTest
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorRepository
+import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorCommand
 import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.author.Author
 import io.mockk.every

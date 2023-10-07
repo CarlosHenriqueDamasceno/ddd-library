@@ -1,7 +1,7 @@
-package com.carloshenriquedev.library.catalog.application.author.useCase
+package com.carloshenriquedev.library.catalog.application.author.port
 
-import com.carloshenriquedev.library.catalog.application.UseCase
 import com.carloshenriquedev.library.catalog.application.common.Either
+import com.carloshenriquedev.library.catalog.application.common.UseCase
 import com.carloshenriquedev.library.catalog.domain.author.Author
 import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
 import java.time.Instant

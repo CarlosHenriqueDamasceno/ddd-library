@@ -23,7 +23,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 @WebMvcTest
-class AuthorControllerTest {
+class CreateAuthorRestControllerTest {
 
     @MockkBean
     lateinit var createUserUseCase: CreateAuthorUseCase

@@ -1,7 +1,7 @@
 package com.carloshenriquedev.library.catalog.application.author.useCase
 
 import com.carloshenriquedev.library.catalog.application.author.UseCaseTest
-import com.carloshenriquedev.library.catalog.application.author.port.AuthorRepository
+import com.carloshenriquedev.library.catalog.application.author.port.AuthorGateway
 import com.carloshenriquedev.library.catalog.application.author.port.CreateAuthorCommand
 import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.author.Author
@@ -16,7 +16,7 @@ import kotlin.test.fail
 
 class DefaultCreateAuthorUseCaseTest : UseCaseTest() {
 
-    private val authorRepository = mockk<AuthorRepository>()
+    private val authorRepository = mockk<AuthorGateway>()
 
     private val useCase = DefaultCreateAuthorUseCase(authorRepository)
 

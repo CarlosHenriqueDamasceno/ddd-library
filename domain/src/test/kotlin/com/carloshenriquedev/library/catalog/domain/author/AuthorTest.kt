@@ -16,7 +16,7 @@ class AuthorTest {
 
         // when / Then
         try {
-            Author.buildNewAuthor(expectedName)
+            Author.create(expectedName)
         } catch (exception: Throwable) {
             fail(exception.message)
         }
@@ -32,7 +32,7 @@ class AuthorTest {
         // when / Then
 
         val exception = assertThrows<DomainException> {
-            Author.buildNewAuthor(expectedName)
+            Author.create(expectedName)
         }
 
         assertIs<DomainException>(exception)

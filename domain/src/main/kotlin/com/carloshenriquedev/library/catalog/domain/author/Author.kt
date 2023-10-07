@@ -14,7 +14,7 @@ class Author private constructor(
     var name: String,
     val createdAt: Instant,
     var updatedAt: Instant,
-    var deletedAt: Instant?
+    var deletedAt: Instant?,
 ) : AggregateRoot<AuthorId>(id) {
 
     init {
@@ -22,11 +22,25 @@ class Author private constructor(
     }
 
     companion object Builder {
-        fun buildNewAuthor(name: String): Author {
+        fun create(name: String): Author {
             val now = nowInMiliSeconds()
             val id = AuthorId(UUID.randomUUID().toString())
             return Author(id, name, now, now, null)
         }
+
+        fun restore(
+            id: String,
+            name: String,
+            createdAt: Instant,
+            updatedAt: Instant,
+            deletedAt: Instant?,
+        ) = Author(
+            AuthorId(id),
+            name,
+            createdAt,
+            updatedAt,
+            deletedAt
+        )
     }
 
     override fun validate() {

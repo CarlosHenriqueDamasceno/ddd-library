@@ -17,7 +17,7 @@ import java.net.URI
 
 @RestController
 @RequestMapping("/api/v1/authors")
-class AuthorController(val createAuthorUseCase: CreateAuthorUseCase) {
+class CreateAuthorController(val createAuthorUseCase: CreateAuthorUseCase) {
 
     @PostMapping
     fun create(@Valid @RequestBody data: AuthorRequest): ResponseEntity<Any> {
@@ -50,7 +50,7 @@ data class AuthorResponse(
     @JsonProperty("id") val id: String,
     @JsonProperty("name") val name: String,
     @JsonProperty("created_at") val createdAt: String,
-    @JsonProperty("deleted_at") val deletedAt: String?
+    @JsonProperty("deleted_at") val deletedAt: String?,
 ) {
     companion object Builder {
         fun from(output: AuthorOutput): AuthorResponse {

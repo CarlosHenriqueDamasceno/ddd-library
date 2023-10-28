@@ -6,7 +6,9 @@ import com.carloshenriquedev.library.catalog.application.author.port.CreateAutho
 import com.carloshenriquedev.library.catalog.application.common.Either
 import com.carloshenriquedev.library.catalog.domain.common.Error
 import com.carloshenriquedev.library.catalog.domain.common.ValidationHandler
+import com.carloshenriquedev.library.catalog.infrastructure.ControllerTest
 import com.carloshenriquedev.library.catalog.infrastructure.author.adapter.AuthorRequest
+import com.carloshenriquedev.library.catalog.infrastructure.author.adapter.CreateAuthorController
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -15,18 +17,17 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-@WebMvcTest
+@ControllerTest(controllers = [CreateAuthorController::class])
 class CreateAuthorRestControllerTest {
 
     @MockkBean
-    lateinit var createUserUseCase: CreateAuthorUseCase
+    lateinit var createAuthorUseCase: CreateAuthorUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -45,7 +46,7 @@ class CreateAuthorRestControllerTest {
 
         val commandSlot = slot<CreateAuthorCommand>()
 
-        every { createUserUseCase.execute(capture(commandSlot)) } answers {
+        every { createAuthorUseCase.execute(capture(commandSlot)) } answers {
             Either.Left(
                 AuthorOutput(
                     expectedId,
@@ -79,7 +80,7 @@ class CreateAuthorRestControllerTest {
 
         val authorRequest = AuthorRequest(expectedName)
 
-        every { createUserUseCase.execute(any()) } answers {
+        every { createAuthorUseCase.execute(any()) } answers {
             Either.Right(ValidationHandler().apply {
                 this.handle(
                     Error("Author's name can not be empty.")

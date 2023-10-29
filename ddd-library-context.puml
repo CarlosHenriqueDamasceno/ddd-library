@@ -1,0 +1,21 @@
+@startuml
+!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title "DDD Library"
+Person(librarian, "Library employee", "Person responsible for manage library collection and holdings")
+Person(normal_patron, "Normal patron", "The non researcher customer")
+Person(researcher_patron, "Researcher patron", "The researcher customer")
+System(ddd_library, "DDD Library", "Library management system")
+
+
+System_Ext(secret_manager, "AWS Secrets Manager", "Credentials Manager")
+System_Ext(apm, "APM", "Application Performance monitoring")
+System_Ext(collect, "OTEL", "OpenTelemetry Collector")
+
+Rel(librarian, ddd_library, "Manage books and his instances, and check for overdues using")
+Rel(normal_patron, ddd_library, "Take holds of circulating books using")
+Rel(researcher_patron, ddd_library, "Take holds of circulating/restricted books using")
+Rel(ddd_library, secret_manager, "Take secrets from", "HTTPS")
+Rel(ddd_library, apm, "Send performance logs for", "HTTPS")
+Rel(ddd_library, collect, "Send Telemetry info for", "HTTPS")
+@enduml

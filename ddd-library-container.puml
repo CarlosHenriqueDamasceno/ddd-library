@@ -1,0 +1,46 @@
+@startuml
+!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+AddRelTag("async", $lineStyle = DashedLine())
+
+title "DDD Library"
+Person(librarian, "Library employee", "Person responsible for manage library collection and holdings")
+Person(normal_patron, "Normal patron", "The non researcher customer")
+Person(researcher_patron, "Researcher patron", "The researcher customer")
+
+System_Boundary(ddd_library, "DDD Library"){
+
+    Container(patron_spa, "Patrons SPA", "Typescript","Frontend used by patrons for take holds and see their profiles.")
+    Container(librarian_spa, "Librarian SPA", "Typescript","Frontend used by librarians for manage library`s collection and check for overdues.")
+
+    Container(catalog_system, "Catalog Management System", "Kotlin", "System responsable for manage the library`s collection.")
+    Container(holding_system, "Holding System", "Java", "System responsable for manage holdings.")
+    Container(patron_profile_system, "Patron profile system", "PHP", "System responsable for provide patron profile info.")
+    Container(daily_sheet_system, "Daily Sheet System", "Java", "System responsable for cheking for overdues.")
+
+    ContainerDb(catalog_system_db, "Catalog DB", "MySQL")
+    ContainerDb(holding_system_db, "Holding DB", "MySQL")
+    ContainerDb(patron_profile_system_db, "Patron profile DB", "MySQL")
+    ContainerDb(daily_sheet_system_db, "Daily Sheet DB", "MySQL")
+
+    Rel(librarian, librarian_spa, "Manage books and his instances using", "HTTPS")
+    Rel(normal_patron, patron_spa, "Take holds of circulating books, and view his profile", "HTTPS")
+    Rel(researcher_patron, patron_spa, "Take holds of circulating and restricted books, and view his profile", "HTTPS")
+
+    Rel(librarian_spa, catalog_system, "Manage books and instances using", "HTTPS/JSON")
+    Rel(librarian_spa, daily_sheet_system, "Check for overdues using", "HTTPS/JSON")
+    Rel(patron_spa, catalog_system, "Take available books and instances from", "HTTPS/JSON")
+    Rel(patron_spa, holding_system, "Create a holding using", "HTTPS/JSON")
+    Rel(patron_spa, patron_profile_system, "Take profile info from", "HTTPS/JSON")
+
+    Rel(holding_system, holding_system_db, "Take/send data from", "TCP")
+    Rel(catalog_system, catalog_system_db, "Take/send data from", "TCP")
+    Rel(patron_profile_system, patron_profile_system_db, "Take/send data from", "TCP")
+    Rel(daily_sheet_system, daily_sheet_system_db, "Take/send data from", "TCP")
+
+    Rel(holding_system, catalog_system, "Set instance as in holding via", "RabbitMQ queue - holding.new", $tags = "async")
+    Rel(holding_system, daily_sheet_system, "Notify holding creation via", "RabbitMQ queue - holding.new", $tags = "async")
+    Rel(holding_system, patron_profile_system, "Notify holding creation via", "RabbitMQ queue - holding.new", $tags = "async")
+    Rel(daily_sheet_system, holding_system, "Notify overdues", "RabbitMQ queue - overdue.new", $tags = "async")
+
+}
+@enduml
